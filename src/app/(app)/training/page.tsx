@@ -1298,7 +1298,6 @@ export default function TrainingPage() {
                         width: '100%',
                         boxSizing: 'border-box',
                         WebkitAppearance: 'none',
-                        MozAppearance: 'textfield' as unknown as string,
                       }}
                     />
 
@@ -1324,7 +1323,6 @@ export default function TrainingPage() {
                         width: '100%',
                         boxSizing: 'border-box',
                         WebkitAppearance: 'none',
-                        MozAppearance: 'textfield' as unknown as string,
                       }}
                     />
 
