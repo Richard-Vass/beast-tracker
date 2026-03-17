@@ -22,15 +22,15 @@ export default function BottomNav() {
       bottom: 0,
       left: 0,
       right: 0,
-      background: 'rgba(10, 10, 10, 0.95)',
-      backdropFilter: 'blur(20px)',
-      WebkitBackdropFilter: 'blur(20px)',
-      borderTop: '1px solid var(--border)',
+      background: 'rgba(8,8,8,0.92)',
+      backdropFilter: 'blur(24px)',
+      WebkitBackdropFilter: 'blur(24px)',
+      borderTop: '1px solid rgba(255,255,255,0.05)',
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
-      paddingTop: 8,
-      paddingBottom: 'max(8px, env(safe-area-inset-bottom))',
+      paddingTop: 6,
+      paddingBottom: 'max(6px, env(safe-area-inset-bottom))',
       zIndex: 100,
     }}>
       {tabs.map(tab => {
@@ -46,14 +46,24 @@ export default function BottomNav() {
               alignItems: 'center',
               gap: 2,
               background: 'none',
-              padding: '4px 12px',
-              color: isActive ? 'var(--orange)' : 'var(--muted)',
+              border: 'none',
+              padding: '6px 16px',
+              color: isActive ? '#F57C00' : 'rgba(255,255,255,0.3)',
               transition: 'color 0.2s',
-              minWidth: 56,
+              minWidth: 52,
+              cursor: 'pointer',
+              position: 'relative',
             }}
           >
-            <Icon size={22} color={isActive ? 'var(--orange)' : 'rgba(255,255,255,0.5)'} />
-            <span style={{ fontSize: 10, fontWeight: isActive ? 600 : 400 }}>{tab.label}</span>
+            {isActive && (
+              <div style={{
+                position: 'absolute', top: -1, width: 20, height: 2,
+                background: '#F57C00', borderRadius: 1,
+                boxShadow: '0 0 8px rgba(245,124,0,0.5)',
+              }} />
+            )}
+            <Icon size={20} color={isActive ? '#F57C00' : 'rgba(255,255,255,0.3)'} />
+            <span style={{ fontSize: 9, fontWeight: isActive ? 700 : 500, letterSpacing: 0.3 }}>{tab.label}</span>
           </button>
         );
       })}
