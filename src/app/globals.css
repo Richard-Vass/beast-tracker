@@ -2,44 +2,86 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   BEAST TRACKER — Design System
+   ============================================ */
+
 :root {
-  --bg: #0a0a0a;
+  /* Background */
+  --bg: #0A0A0A;
+  --bg-subtle: #0E0E0E;
   --card: #111111;
-  --card-hover: #1a1a1a;
-  --border: #222222;
-  --orange: #FF6B00;
-  --orange-light: #FF8533;
+  --card-hover: #1A1A1A;
+  --card-elevated: #161616;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.1);
+  --border-focus: var(--orange);
+
+  /* Brand */
+  --orange: #F57C00;
+  --orange-light: #FF9800;
   --orange-dark: #CC5500;
+  --orange-glow: rgba(245, 124, 0, 0.15);
+  --orange-glow-strong: rgba(245, 124, 0, 0.3);
+
+  /* Semantic */
   --green: #10B981;
   --red: #EF4444;
   --yellow: #F59E0B;
   --blue: #3B82F6;
-  --purple: #8B5CF6;
-  --muted: rgba(255, 255, 255, 0.5);
-  --soft: rgba(255, 255, 255, 0.7);
+  --purple: #A855F7;
+
+  /* Text */
+  --text: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.55);
+  --text-tertiary: rgba(255, 255, 255, 0.3);
+  --text-ghost: rgba(255, 255, 255, 0.15);
+
+  /* Spacing */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
 }
+
+/* ============================================
+   Base Reset & Globals
+   ============================================ */
 
 * {
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {
   scroll-behavior: smooth;
-  -webkit-tap-highlight-color: transparent;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   background: var(--bg);
-  color: #fff;
+  color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Inter', system-ui, sans-serif;
   margin: 0;
   padding: 0;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   overscroll-behavior: none;
+  line-height: 1.5;
 }
 
-/* PWA safe areas */
+/* PWA Safe Areas */
 body {
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
@@ -47,92 +89,402 @@ body {
   padding-right: env(safe-area-inset-right);
 }
 
-/* Custom scrollbar */
+/* ============================================
+   Scrollbar
+   ============================================ */
+
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
+  height: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
+  background: var(--orange-dark);
+  border-radius: 10px;
+  transition: background var(--duration-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
   background: var(--orange);
-  border-radius: 4px;
 }
 
-/* Selection */
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange-dark) transparent;
+}
+
+/* ============================================
+   Selection
+   ============================================ */
+
 ::selection {
-  background: rgba(255, 107, 0, 0.3);
-  color: #fff;
+  background: var(--orange-glow-strong);
+  color: var(--text);
 }
 
-/* Focus */
+::-moz-selection {
+  background: var(--orange-glow-strong);
+  color: var(--text);
+}
+
+/* ============================================
+   Focus
+   ============================================ */
+
 :focus-visible {
   outline: 2px solid var(--orange);
   outline-offset: 2px;
 }
 
-/* Input styles */
-input, select, textarea {
-  background: var(--card);
-  color: #fff;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px 14px;
-  font-size: 16px;
-  width: 100%;
-  transition: border-color 0.2s;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: var(--orange);
+:focus:not(:focus-visible) {
   outline: none;
 }
 
+/* ============================================
+   Typography
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--orange-light);
+  text-decoration: none;
+  transition: color var(--duration-fast) ease;
+}
+
+a:hover {
+  color: var(--orange);
+}
+
+/* ============================================
+   Form Elements
+   ============================================ */
+
+input,
+select,
+textarea {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  font-size: 16px;
+  font-family: inherit;
+  width: 100%;
+  transition:
+    border-color var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    background var(--duration-normal) var(--ease-out);
+}
+
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+  color: var(--text-tertiary);
+}
+
+input:hover,
+select:hover,
+textarea:hover {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: var(--card-elevated);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px var(--orange-glow), 0 0 20px var(--orange-glow);
+  background: var(--card-elevated);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+  cursor: pointer;
+}
+
+/* Number input — no spinners */
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Button base */
+/* ============================================
+   Range Slider
+   ============================================ */
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--card-elevated);
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: var(--orange);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--orange), 0 2px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-spring),
+    box-shadow var(--duration-fast) var(--ease-out);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 0 2px var(--orange-light), 0 0 12px var(--orange-glow);
+}
+
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.05);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--orange);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+  box-shadow: 0 0 0 2px var(--orange), 0 2px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-track {
+  background: var(--card-elevated);
+  height: 6px;
+  border-radius: 3px;
+  border: none;
+}
+
+input[type="range"]:focus {
+  box-shadow: none;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+
 button {
   cursor: pointer;
   border: none;
   font-family: inherit;
+  font-size: inherit;
+  transition:
+    transform var(--duration-fast) var(--ease-spring),
+    opacity var(--duration-fast) ease,
+    box-shadow var(--duration-normal) var(--ease-out),
+    background var(--duration-fast) ease;
 }
 
-/* Animations */
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  transform: none;
+}
+
+button:disabled:hover {
+  transform: none;
+}
+
+/* ============================================
+   Animations — Keyframes
+   ============================================ */
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
 }
 
 @keyframes confetti {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px) rotate(720deg);
+    opacity: 0;
+  }
 }
 
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--orange-glow);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--orange-glow-strong);
+  }
+}
+
+/* ============================================
+   Animation Utility Classes
+   ============================================ */
+
 .animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
+  animation: fadeIn 0.3s var(--ease-out) both;
 }
 
 .animate-slideUp {
-  animation: slideUp 0.4s ease-out;
+  animation: slideUp 0.4s var(--ease-out) both;
+}
+
+.animate-slideDown {
+  animation: slideDown 0.4s var(--ease-out) both;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.3s var(--ease-spring) both;
 }
 
 .animate-pulse-orange {
   animation: pulse 2s ease-in-out infinite;
 }
+
+.animate-spin {
+  animation: spin 0.8s linear infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--card) 25%,
+    var(--card-elevated) 50%,
+    var(--card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
